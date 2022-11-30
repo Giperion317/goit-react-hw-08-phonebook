@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { ValidateForm } from './ValidateForm';
 import { StyleInput, Lable, FormButton } from './ContactForm.styled';
@@ -40,3 +41,8 @@ export const ContactForm = ({ onSabmit }) => (
     </Form>
   </Formik>
 );
+
+
+ContactForm.propTypes = {
+  onSabmit: PropTypes.func.isRequired,
+}
