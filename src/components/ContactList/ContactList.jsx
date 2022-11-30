@@ -1,7 +1,13 @@
+import PropTypes from 'prop-types';
 import { ContactItem } from "./ContactItem"
+import { List } from "./ContactList.styled"
 
 export const ContactList = ({ contacts, deleteContact }) => (
-    <ul>
+    <List>
         {contacts.map((contact) => ContactItem(contact, deleteContact))}
-    </ul>
+    </List>
 )
+
+ContactItem.propTypes = {
+  contacts: PropTypes.array.isRequired,
+}

@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import { ContactForm } from "./ContactForm/ContactForm";
 import { Filter } from './Filter/Filter';
 import { ContactList } from "./ContactList/ContactList";
+import { GlobalStyle } from 'utils/GlobalStyles';
 
 export class App extends Component {
   state = {
@@ -55,7 +56,8 @@ export class App extends Component {
         <h2>Contacts</h2>
         <Filter value={this.state.filter} onChange={this.chengeFilter} />
         <ContactList contacts={visebleContacts} deleteContact={this.deleteContact} />
-        </>
+        <GlobalStyle/>
+      </>
     );
   }
 }
