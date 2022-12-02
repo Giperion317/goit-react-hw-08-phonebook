@@ -1,5 +1,6 @@
 import { Component } from 'react';
 import { nanoid } from "nanoid";
+import { ToastContainer, toast } from 'react-toastify';
 import { ContactForm } from "./ContactForm/ContactForm";
 import { Filter } from './Filter/Filter';
 import { ContactList } from "./ContactList/ContactList";
@@ -30,19 +31,21 @@ export class App extends Component {
   }
 
   getVisibleContatcts = () => {
+    const {contacts} = this.state
     const normalizedFilter = this.state.filter.toLocaleLowerCase();
-    return this.state.contacts.filter(contact => contact.name.toLocaleLowerCase().includes(normalizedFilter));
+    return contacts.filter(contact => contact.name.toLocaleLowerCase().includes(normalizedFilter));
   }
 
   addContact = (data) => {
+    const {contacts} = this.state
     const newContact = { ...data, id: nanoid() }
-    const nameMatch = this.state.contacts.find(({name}) => {
+    const nameMatch = contacts.find(({name}) => {
           return (
         name.toLowerCase() === newContact.name.toLowerCase());
     });
 
     nameMatch
-      ? window.alert(`${newContact.name} is alredy in contacts!`)
+      ? toast.warn(`${newContact.name} is alredy in contacts!`)
       : this.setState(prevState => ({
           contacts: [...prevState.contacts, newContact],
         }));
@@ -57,15 +60,17 @@ export class App extends Component {
   }
 
   render() {
+    const {filter} = this.state
     const visebleContacts = this.getVisibleContatcts();
     return (
       <>
         <h1>Ponebook</h1>
         <ContactForm onSabmit={this.addContact}/>
         <h2>Contacts</h2>
-        <Filter value={this.state.filter} onChange={this.chengeFilter} />
+        <Filter value={filter} onChange={this.chengeFilter} />
         <ContactList contacts={visebleContacts} deleteContact={this.deleteContact} />
-        <GlobalStyle/>
+        <ToastContainer position="top-center" autoClose={3000} theme="colored"/>
+        <GlobalStyle />
       </>
     );
   }

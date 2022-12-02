@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { App } from 'components/App';
+import 'react-toastify/dist/ReactToastify.css';
 import 'modern-normalize';
+import { App } from 'components/App';
 import { theme } from './utils/theme';
 import { ThemeProvider } from 'styled-components';
 
