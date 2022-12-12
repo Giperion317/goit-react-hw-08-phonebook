@@ -1,4 +1,4 @@
-import { Component } from 'react';
+import { useState, useEffect } from 'react';
 import { nanoid } from "nanoid";
 import { ToastContainer, toast } from 'react-toastify';
 import { ContactForm } from "./ContactForm/ContactForm";
@@ -6,72 +6,47 @@ import { Filter } from './Filter/Filter';
 import { ContactList } from "./ContactList/ContactList";
 import { GlobalStyle } from 'utils/GlobalStyles';
 
-export class App extends Component {
-  state = {
-  contacts: [],
-  filter: ''
+export const App = () => {
+  const [contacts, setContacts] = useState(()=>JSON.parse(localStorage.getItem('contacts')) ?? [])
+  const [filter, setFilter] = useState('')
+
+  useEffect(() => {
+      window.localStorage.setItem('contacts', JSON.stringify(contacts))
+     }, [contacts]);
+
+  const chengeFilter = (event) => {
+    setFilter(event.target.value)
   }
 
-  componentDidMount() {
-    const savedContacts = localStorage.getItem('contacts')
-    if (savedContacts) {
-      this.setState({contacts: JSON.parse(savedContacts)})
-    }
-  }
-
-  componentDidUpdate(_, prevState) {
-    const {contacts} = this.state
-    if (prevState.contacts !== contacts) {
-      localStorage.setItem('contacts', JSON.stringify(contacts))
-    }
-  }
-
-  chengeFilter = (event) => {
-    this.setState({filter:event.target.value})
-  }
-
-  getVisibleContatcts = () => {
-    const {contacts} = this.state
-    const normalizedFilter = this.state.filter.toLocaleLowerCase();
+  const getVisibleContatcts = () => {
+    const normalizedFilter = filter.toLocaleLowerCase();
     return contacts.filter(contact => contact.name.toLocaleLowerCase().includes(normalizedFilter));
   }
 
-  addContact = (data) => {
-    const {contacts} = this.state
+  const addContact = (data) => {
     const newContact = { ...data, id: nanoid() }
     const nameMatch = contacts.find(({name}) => {
           return (
         name.toLowerCase() === newContact.name.toLowerCase());
     });
-
     nameMatch
       ? toast.warn(`${newContact.name} is alredy in contacts!`)
-      : this.setState(prevState => ({
-          contacts: [...prevState.contacts, newContact],
-        }));
-    
+      : setContacts(prevContact =>  [...prevContact, newContact]);
   }
 
-  deleteContact = (contactId) => {
-    this.setState(prevState => (
-      {contacts: prevState.contacts.filter(({id})=> id !== contactId)}
-    ))
-    
+    const deleteContact = (contactId) => {
+    setContacts(prevContacts => prevContacts.filter(({id})=> id !== contactId))
   }
 
-  render() {
-    const {filter} = this.state
-    const visebleContacts = this.getVisibleContatcts();
-    return (
+  return (
       <>
         <h1>Ponebook</h1>
-        <ContactForm onSabmit={this.addContact}/>
+        <ContactForm onSabmit={addContact}/>
         <h2>Contacts</h2>
-        <Filter value={filter} onChange={this.chengeFilter} />
-        <ContactList contacts={visebleContacts} deleteContact={this.deleteContact} />
+        <Filter value={filter} onChange={chengeFilter} />
+        <ContactList contacts={getVisibleContatcts()} deleteContact={deleteContact} />
         <ToastContainer position="top-center" autoClose={3000} theme="colored"/>
         <GlobalStyle />
       </>
     );
-  }
 }
