@@ -1,13 +1,12 @@
-import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
+import { getContacts } from 'redux/contacts/contacts-selector';
 import { ContactItem } from "./ContactItem"
 import { List } from "./ContactList.styled"
 
-export const ContactList = ({ contacts, deleteContact }) => (
+export const ContactList = () => {
+   const contacts = useSelector(getContacts)
+    return (
     <List>
-        {contacts.map((contact) => ContactItem(contact, deleteContact))}
-    </List>
-)
-
-ContactItem.propTypes = {
-  contacts: PropTypes.array.isRequired,
+      {contacts.map((contact) => ContactItem(contact))}
+    </List>)
 }
