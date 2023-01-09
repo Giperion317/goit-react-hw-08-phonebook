@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import styles from './Form.module.css';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/contacts/contacts-selector';
 import { useDispatch } from 'react-redux';
@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { ValidateForm } from './ValidateForm';
 import { StyleInput, Lable, FormButton } from './ContactForm.styled';
-import styles from './Form.module.css';
 
 export const ContactForm = () => {
   const contacts = useSelector(getContacts);
@@ -57,8 +56,4 @@ export const ContactForm = () => {
       </Form>
     </Formik>
   );
-};
-
-ContactForm.propTypes = {
-  onSabmit: PropTypes.func.isRequired,
 };

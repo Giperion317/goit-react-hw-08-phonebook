@@ -1,14 +1,16 @@
-import PropTypes from 'prop-types';
+import { useDispatch } from 'react-redux';
+import { setFilter } from 'redux/filter/filterSlise';
 
 import { FilterLable, FilterInput } from "./Filter.styled"
 
-export const Filter = ({ value, onChange }) => (
-    <FilterLable>Find contacts by name
-        <FilterInput type="text" value={value} onChange={onChange} />
-    </FilterLable>
-)
+export const Filter = () => {
+  const dispatch = useDispatch();
 
-Filter.propTypes = {
-  value: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-}
+  const chengeFilter = (event) => {
+    dispatch(setFilter(event.target.value))
+  }
+  return(
+    <FilterLable>Find contacts by name
+        <FilterInput type="text" onChange={chengeFilter} />
+    </FilterLable>
+)}
