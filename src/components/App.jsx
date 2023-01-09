@@ -7,7 +7,7 @@ import { GlobalStyle } from 'utils/GlobalStyles';
 export const App = () => {
   return (
       <>
-        <h1>Ponebook</h1>
+        <h1>Phonebook</h1>
         <ContactForm/>
         <h2>Contacts</h2>
         <Filter/>
