@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const List = styled.ul`
   padding: 10px;
-  width: 300px;
+  width: 400px;
   margin-top: 20px;
   margin-left: 10px;
 `;
@@ -19,8 +19,9 @@ export const Paragraph = styled.p`
   font-weight: 500;
 `;
 
-export const Span = styled.span`
-  margin-left: 10px;
+export const Phone = styled.p`
+  margin-left: auto;
+  margin-right: 20px;
   font-weight: 400;
   color: ${props => props.theme.colors.accent};
 `;

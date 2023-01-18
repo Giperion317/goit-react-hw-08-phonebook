@@ -1,10 +1,21 @@
-import { ToastContainer} from 'react-toastify';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/contacts/contacts-operation';
+import { ToastContainer } from 'react-toastify';
 import { ContactForm } from "./ContactForm/ContactForm";
 import { Filter } from './Filter/Filter';
 import { ContactList } from "./ContactList/ContactList";
 import { GlobalStyle } from 'utils/GlobalStyles';
 
+
+
+
 export const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchContacts())
+  }, [dispatch]);
+
   return (
       <>
         <h1>Phonebook</h1>

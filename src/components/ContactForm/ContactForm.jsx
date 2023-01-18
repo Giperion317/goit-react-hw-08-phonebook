@@ -2,7 +2,7 @@ import styles from './Form.module.css';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/contacts/contacts-selector';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/contacts/contactsSlice';
+// import { addContact } from 'redux/contacts/contactsSlice';
 import { nanoid } from 'nanoid';
 import { toast } from 'react-toastify';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
@@ -23,7 +23,7 @@ export const ContactForm = () => {
         });
         nameMatch
           ? toast.warn(`${newContact.name} is alredy in contacts!`)
-          : dispatch(addContact(newContact));
+          : dispatch();
         values = { name: '', number: '' };
         resetForm();
         setSubmitting(false);
