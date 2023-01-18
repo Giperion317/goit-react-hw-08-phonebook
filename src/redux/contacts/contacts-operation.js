@@ -14,3 +14,14 @@ export const fetchContacts = createAsyncThunk(
     }
   }
 );
+
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContacts',
+  async (id, { rejectWithValue }) => {
+    try {
+      await axios.delete(`/contacts/${id}`);
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);

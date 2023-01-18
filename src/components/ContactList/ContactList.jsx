@@ -7,9 +7,6 @@ import { List } from "./ContactList.styled"
 export const ContactList = () => {
   const contacts = useSelector(getContacts)
   const filter = useSelector(getFilter)
-   if (contacts.lengs === 0) {
-    return;
-  }
   const visibleContacts = getVisibleContatcts()
   function getVisibleContatcts() {
     const normalizedFilter = filter.toLocaleLowerCase();
