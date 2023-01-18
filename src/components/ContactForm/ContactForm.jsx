@@ -2,8 +2,7 @@ import styles from './Form.module.css';
 import { useSelector } from 'react-redux';
 import { getContacts } from 'redux/contacts/contacts-selector';
 import { useDispatch } from 'react-redux';
-// import { addContact } from 'redux/contacts/contactsSlice';
-import { nanoid } from 'nanoid';
+import { addContact } from 'redux/contacts/contacts-operation';
 import { toast } from 'react-toastify';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { ValidateForm } from './ValidateForm';
@@ -14,17 +13,16 @@ export const ContactForm = () => {
   const dispatch = useDispatch();
   return (
     <Formik
-      initialValues={{ name: '', number: '' }}
+      initialValues={{ name: '', phone: '' }}
       validationSchema={ValidateForm}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        const newContact = { ...values, id: nanoid() };
-        const nameMatch = contacts.find(({ name }) => {
-          return name.toLowerCase() === newContact.name.toLowerCase();
+          const nameMatch = contacts.find(({ name }) => {
+          return name.toLowerCase() === values.name.toLowerCase();
         });
         nameMatch
-          ? toast.warn(`${newContact.name} is alredy in contacts!`)
-          : dispatch();
-        values = { name: '', number: '' };
+          ? toast.warn(`${values.name} is alredy in contacts!`)
+          : dispatch(addContact(values));
+        values = { name: '', phone: '' };
         resetForm();
         setSubmitting(false);
       }}
@@ -46,12 +44,12 @@ export const ContactForm = () => {
           <Field
             as={StyleInput}
             type="tel"
-            name="number"
+            name="phone"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           />
         </Lable>
-        <ErrorMessage name="number" />
+        <ErrorMessage name="phone" />
         <FormButton type="submit">Add Contact</FormButton>
       </Form>
     </Formik>
