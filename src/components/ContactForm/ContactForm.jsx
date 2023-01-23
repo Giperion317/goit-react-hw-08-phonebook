@@ -13,7 +13,7 @@ export const ContactForm = () => {
   const dispatch = useDispatch();
   return (
     <Formik
-      initialValues={{ name: '', phone: '' }}
+      initialValues={{ name: '', number: '' }}
       validationSchema={ValidateForm}
       onSubmit={(values, { setSubmitting, resetForm }) => {
           const nameMatch = contacts.find(({ name }) => {
@@ -22,7 +22,7 @@ export const ContactForm = () => {
         nameMatch
           ? toast.warn(`${values.name} is alredy in contacts!`)
           : dispatch(addContact(values));
-        values = { name: '', phone: '' };
+        values = { name: '', number: '' };
         resetForm();
         setSubmitting(false);
       }}
@@ -44,12 +44,12 @@ export const ContactForm = () => {
           <Field
             as={StyleInput}
             type="tel"
-            name="phone"
+            name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           />
         </Lable>
-        <ErrorMessage name="phone" />
+        <ErrorMessage name="number" />
         <FormButton type="submit">Add Contact</FormButton>
       </Form>
     </Formik>

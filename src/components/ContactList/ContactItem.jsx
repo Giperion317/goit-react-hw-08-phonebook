@@ -4,14 +4,14 @@ import { deleteContact } from 'redux/contacts/contacts-operation';
 
 import { Item, Paragraph, Phone, Button } from "./ContactList.styled"
 
-export const ContactItem = ({ id, name, phone }) => {
+export const ContactItem = ({ id, name, number }) => {
   const dispatch = useDispatch()
   return (
   <Item key={id}>
     <Paragraph>
       {name}:
       </Paragraph>
-      <Phone>{phone}</Phone>
+      <Phone>{number}</Phone>
     <Button type="button" onClick={() => dispatch(deleteContact(id))}>
       Delete
     </Button>
