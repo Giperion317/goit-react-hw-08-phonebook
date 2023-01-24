@@ -1,4 +1,4 @@
-import { register, login, logout } from './auth-operations';
+import { register, login, logout, fetchCurrentUser } from './auth-operations';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
@@ -6,6 +6,7 @@ const initialState = {
   token: null,
   isLoading: false,
   error: null,
+  isFetchingCurrentUser: false,
 };
 
 const authSlice = createSlice({
@@ -44,11 +45,26 @@ const authSlice = createSlice({
     [logout.fulfilled]: state => {
       state.isLoading = false;
       state.error = null;
-      state.user = { name: '', email: '' };
       state.token = null;
+      state.user = { name: '', email: '' };
     },
     [logout.rejected]: (state, { payload }) => {
       state.isLoading = false;
+      state.error = payload;
+    },
+    [fetchCurrentUser.pending]: state => {
+      state.isLoading = true;
+      state.isFetchingCurrentUser = true;
+    },
+    [fetchCurrentUser.fulfilled]: (state, { payload }) => {
+      state.isLoading = false;
+      state.error = null;
+      state.isFetchingCurrentUser = false;
+      state.user = payload;
+    },
+    [fetchCurrentUser.rejected]: (state, { payload }) => {
+      state.isLoading = false;
+      state.isFetchingCurrentUser = false;
       state.error = payload;
     },
   },

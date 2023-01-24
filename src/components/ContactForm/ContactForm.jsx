@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/contacts/contacts-operation';
 import { toast } from 'react-toastify';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { ValidateForm } from '../../utils/ValidateForm';
+import { ValidateContactForm } from '../../utils/ValidateForm';
 import { StyleInput, Lable, FormButton } from './ContactForm.styled';
 
 export const ContactForm = () => {
@@ -14,7 +14,7 @@ export const ContactForm = () => {
   return (
     <Formik
       initialValues={{ name: '', number: '' }}
-      validationSchema={ValidateForm}
+      validationSchema={ValidateContactForm}
       onSubmit={(values, { setSubmitting, resetForm }) => {
           const nameMatch = contacts.find(({ name }) => {
           return name.toLowerCase() === values.name.toLowerCase();

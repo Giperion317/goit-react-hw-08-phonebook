@@ -1,26 +1,21 @@
 import { useDispatch } from 'react-redux';
-import { register } from 'redux/auht/auth-operations';
+import { login } from 'redux/auht/auth-operations';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { ValidateRegisterForm } from '../../utils/ValidateForm';
+import { ValidateLoginForm } from '../../utils/ValidateForm';
 
-export const RegisterForm = () => {
+export const LoginForm = () => {
   const dispatch = useDispatch();
   return (
     <Formik
-      initialValues={{ name: '', email: '', password: '' }}
-      validationSchema={ValidateRegisterForm}
+      initialValues={{ email: '', password: '' }}
+      validationSchema={ValidateLoginForm}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        dispatch(register(values));
+        dispatch(login(values));
         resetForm();
         setSubmitting(false);
       }}
     >
       <Form>
-        <label>
-          Name:
-          <Field type="text" name="name" />
-        </label>
-        <ErrorMessage name="name" />
         <label>
           Email:
           <Field type="email" name="email" />
@@ -31,7 +26,7 @@ export const RegisterForm = () => {
           <Field type="password" name="password" />
         </label>
         <ErrorMessage name="pasword" />
-        <button type="submit">Sing Up</button>
+        <button type="submit">Login</button>
       </Form>
     </Formik>
   );
