@@ -8,4 +8,8 @@ export const ValidateForm = Yup.object({
   phone: Yup.string()
     .max(12, () => toast.warn('Must be 12 digits or less'))
     .required('Required'),
+  email: Yup.string().email('Invalid email address').required('Required'),
+  password: Yup.string()
+    .min(6, () => toast.warn('Must be 12 digits or less'))
+    .required('Required'),
 });

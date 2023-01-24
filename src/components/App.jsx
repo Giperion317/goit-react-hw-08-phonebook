@@ -5,6 +5,7 @@ import { fetchContacts } from 'redux/contacts/contacts-operation';
 import { ToastContainer } from 'react-toastify';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
+import { RegisterForm } from './RegisterForm/RegisterForm';
 import { ContactList } from './ContactList/ContactList';
 import { GlobalStyle } from 'utils/GlobalStyles';
 import { MutatingDots } from 'react-loader-spinner';
@@ -37,6 +38,7 @@ export const App = () => {
         />
       )}
       {!isLoading && <ContactList />}
+      <RegisterForm/>
       <ToastContainer position="top-center" autoClose={3000} theme="colored" />
       <GlobalStyle />
     </>

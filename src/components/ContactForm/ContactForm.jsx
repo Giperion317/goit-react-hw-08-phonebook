@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/contacts/contacts-operation';
 import { toast } from 'react-toastify';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { ValidateForm } from './ValidateForm';
+import { ValidateForm } from '../../utils/ValidateForm';
 import { StyleInput, Lable, FormButton } from './ContactForm.styled';
 
 export const ContactForm = () => {

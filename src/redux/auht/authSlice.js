@@ -8,7 +8,7 @@ const initialState = {
   error: null,
 };
 
-const contactsSlice = createSlice({
+const authSlice = createSlice({
   name: 'auth',
   initialState,
   extraReducers: {
@@ -53,3 +53,5 @@ const contactsSlice = createSlice({
     },
   },
 });
+
+export default authSlice.reducer;
