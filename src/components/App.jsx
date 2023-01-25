@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { getIsLoading } from 'redux/contacts/contacts-selector';
+import { selectToken } from 'redux/auht/auth-selector';
 import { useEffect } from 'react';
 import { fetchContacts } from 'redux/contacts/contacts-operation';
 import { ToastContainer } from 'react-toastify';
@@ -15,10 +16,11 @@ import { MutatingDots } from 'react-loader-spinner';
 export const App = () => {
   const dispatch = useDispatch();
   const isLoading = useSelector(getIsLoading);
+  const token = useSelector(selectToken);
   
-  // useEffect(() => {
-  //   dispatch(fetchContacts());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch, token]);
 
   return (
     <>
@@ -42,7 +44,7 @@ export const App = () => {
           visible={true}
         />
       )}
-      {!isLoading && <ContactList />}
+      {!isLoading && token && <ContactList />}
       <ToastContainer position="top-center" autoClose={3000} theme="colored" limit={1}/>
       <GlobalStyle />
     </>
