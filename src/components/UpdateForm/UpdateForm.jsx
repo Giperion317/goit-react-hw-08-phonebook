@@ -1,56 +1,43 @@
-import styles from './Form.module.css';
-import { useSelector } from 'react-redux';
-import { selectContacts } from 'redux/contacts/contacts-selector';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/contacts/contacts-operation';
-import { toast } from 'react-toastify';
+import { updateContact } from 'redux/contacts/contacts-operation';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { ValidateContactForm } from '../../utils/ValidateForm';
-import { StyleInput, Lable, FormButton } from './ContactForm.styled';
 
-export const ContactForm = () => {
-  const contacts = useSelector(selectContacts);
+export const UpdateForm = ({ userToUpdate, clousForm }) => {
   const dispatch = useDispatch();
   return (
     <Formik
-      initialValues={{ name: '', number: '' }}
+      initialValues={{ name: userToUpdate.name, number: userToUpdate.number }}
       validationSchema={ValidateContactForm}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-          const nameMatch = contacts.find(({ name }) => {
-          return name.toLowerCase() === values.name.toLowerCase();
-        });
-        nameMatch
-          ? toast.warn(`${values.name} is alredy in contacts!`)
-          : dispatch(addContact(values));
-        values = { name: '', number: '' };
+        dispatch(updateContact({...userToUpdate, ...values}))
         resetForm();
         setSubmitting(false);
+        clousForm();
       }}
     >
-      <Form className={styles.form}>
-        <Lable>
+      <Form>
+        <label>
           Name:
           <Field
-            as={StyleInput}
             type="text"
             name="name"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
           />
-        </Lable>
+        </label>
         <ErrorMessage name="name" />
-        <Lable>
+        <lable>
           Number:
           <Field
-            as={StyleInput}
             type="tel"
             name="number"
             pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
             title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
           />
-        </Lable>
-        <ErrorMessage name="number" />
-        <FormButton type="submit">Add Contact</FormButton>
+        </lable>
+        <ErrorMessage name="name" />
+        <button type="submit">Update</button>
       </Form>
     </Formik>
   );

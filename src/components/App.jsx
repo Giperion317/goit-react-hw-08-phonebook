@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { getIsLoading } from 'redux/contacts/contacts-selector';
+import { selectIsLoading } from 'redux/contacts/contacts-selector';
 import { selectToken } from 'redux/auht/auth-selector';
 import { useEffect } from 'react';
 import { fetchContacts } from 'redux/contacts/contacts-operation';
@@ -15,7 +15,7 @@ import { MutatingDots } from 'react-loader-spinner';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(getIsLoading);
+  const isLoading = useSelector(selectIsLoading);
   const token = useSelector(selectToken);
   
   useEffect(() => {
