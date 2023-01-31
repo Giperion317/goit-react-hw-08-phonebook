@@ -1,51 +1,64 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { selectIsLoading } from 'redux/contacts/contacts-selector';
-import { selectToken } from 'redux/auht/auth-selector';
 import { useEffect } from 'react';
-import { fetchContacts } from 'redux/contacts/contacts-operation';
-import { ToastContainer } from 'react-toastify';
-import { ContactForm } from './ContactForm/ContactForm';
-import { Filter } from './Filter/Filter';
-import { RegisterForm } from './RegisterForm/RegisterForm';
-import { LoginForm } from './LoginForm/LoginForm';
-import { UserAuthMenu } from './UserAuthMenu/UserAuthMenu';
-import { ContactList } from './ContactList/ContactList';
+import { useDispatch, useSelector } from 'react-redux';
+import { Routes, Route } from 'react-router-dom';
+import { Layout } from './Layout/Layout';
+import { HomePage } from 'pages/HomePage/HomePage';
+import { ContactsPage } from 'pages/ContactsPage/ContactsPage';
+import { RegisterPage } from 'pages/PegisterPage/RegisterPage';
+import { LoginPage } from 'pages/LoginPage/LoginPage';
 import { GlobalStyle } from 'utils/GlobalStyles';
-import { MutatingDots } from 'react-loader-spinner';
+import { fetchCurrentUser } from 'redux/auht/auth-operations';
+import { PrivateRoute } from 'HOCs/PrivateRoute';
+import { PublicRoute } from 'HOCs/PublicRoute';
+import { selectIsFetchingCurentUser } from 'redux/auht/auth-selector';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isLoading = useSelector(selectIsLoading);
-  const token = useSelector(selectToken);
-  
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch, token]);
+  const isFetchingCurentUser = useSelector(selectIsFetchingCurentUser)
 
+  useEffect(() => {
+    dispatch(fetchCurrentUser());
+  }, [dispatch]);
   return (
     <>
-      <UserAuthMenu/>
-      <RegisterForm />
-      <LoginForm/>
-      <h1>Phonebook</h1>
-      <ContactForm />
-      <h2>Contacts</h2>
-      <Filter />
-      {isLoading && (
-        <MutatingDots
-          height="100"
-          width="100"
-          color='#205d5c'
-          secondaryColor='#205d5c'
-          radius="12.5"
-          ariaLabel="mutating-dots-loading"
-          wrapperStyle={{}}
-          wrapperClass=""
-          visible={true}
-        />
+      {!isFetchingCurentUser && (
+<Routes>
+        <Route path="/" element={<Layout />}>
+          <Route
+            index
+            element={
+              <PublicRoute restricted>
+                <HomePage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="contacts"
+            element={
+              <PrivateRoute>
+                <ContactsPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="register"
+            element={
+              <PublicRoute restricted>
+                <RegisterPage />
+              </PublicRoute>
+            }
+          />
+          <Route
+            path="login"
+            element={
+              <PublicRoute restricted>
+                <LoginPage />
+              </PublicRoute>
+            }
+          />
+        </Route>
+      </Routes>
       )}
-      {!isLoading && token && <ContactList />}
-      <ToastContainer position="top-center" autoClose={3000} theme="colored" limit={1}/>
       <GlobalStyle />
     </>
   );

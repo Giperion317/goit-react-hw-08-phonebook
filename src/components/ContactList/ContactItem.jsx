@@ -12,14 +12,14 @@ export const ContactItem = (
 ) => {
   const dispatch = useDispatch();
   return (
-    <Item>
+    <Item key={id}>
       <Paragraph>{name}:</Paragraph>
       <Phone>{number}</Phone>
-      <Button type="button" onClick={() => dispatch(deleteContact(id))}>
-        Delete
-      </Button>
       <Button type="button" onClick={() => showUpdateForm(id)}>
         Update
+      </Button>
+      <Button type="button" onClick={() => dispatch(deleteContact(id))}>
+        Delete
       </Button>
       {userToUpdate && userToUpdate.id === id && (
         <UpdateForm userToUpdate={userToUpdate} clousForm={clousForm} />
