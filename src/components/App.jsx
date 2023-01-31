@@ -14,7 +14,7 @@ import { selectIsFetchingCurentUser } from 'redux/auht/auth-selector';
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isFetchingCurentUser = useSelector(selectIsFetchingCurentUser)
+  const isFetchingCurentUser = useSelector(selectIsFetchingCurentUser);
 
   useEffect(() => {
     dispatch(fetchCurrentUser());
@@ -22,42 +22,42 @@ export const App = () => {
   return (
     <>
       {!isFetchingCurentUser && (
-<Routes>
-        <Route path="/" element={<Layout />}>
-          <Route
-            index
-            element={
-              <PublicRoute restricted>
-                <HomePage />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="contacts"
-            element={
-              <PrivateRoute>
-                <ContactsPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="register"
-            element={
-              <PublicRoute restricted>
-                <RegisterPage />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="login"
-            element={
-              <PublicRoute restricted>
-                <LoginPage />
-              </PublicRoute>
-            }
-          />
-        </Route>
-      </Routes>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route
+              index
+              element={
+                <PublicRoute restricted>
+                  <HomePage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="contacts"
+              element={
+                <PrivateRoute>
+                  <ContactsPage />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="register"
+              element={
+                <PublicRoute restricted>
+                  <RegisterPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="login"
+              element={
+                <PublicRoute restricted>
+                  <LoginPage />
+                </PublicRoute>
+              }
+            />
+          </Route>
+        </Routes>
       )}
       <GlobalStyle />
     </>
