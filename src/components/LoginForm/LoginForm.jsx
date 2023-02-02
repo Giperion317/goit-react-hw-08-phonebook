@@ -1,10 +1,7 @@
-import { useSelector } from 'react-redux';
-import { selectContacts } from 'redux/contacts/contacts-selector';
 import { useDispatch } from 'react-redux';
-import { addContact } from 'redux/contacts/contacts-operation';
-import { toast } from 'react-toastify';
+import { login } from 'redux/auht/auth-operations';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
-import { ValidateContactForm } from '../../utils/ValidateForm';
+import { ValidateLoginForm } from '../../utils/ValidateForm';
 import {
   Heading,
   FormControl,
@@ -13,22 +10,16 @@ import {
   Button,
   Box,
 } from '@chakra-ui/react';
+import { TbLogin } from 'react-icons/tb';
 
-export const ContactForm = () => {
-  const contacts = useSelector(selectContacts);
+export const LoginForm = () => {
   const dispatch = useDispatch();
   return (
     <Formik
-      initialValues={{ name: '', number: '' }}
-      validationSchema={ValidateContactForm}
+      initialValues={{ email: '', password: '' }}
+      validationSchema={ValidateLoginForm}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        const nameMatch = contacts.find(({ name }) => {
-          return name.toLowerCase() === values.name.toLowerCase();
-        });
-        nameMatch
-          ? toast.warn(`${values.name} is alredy in contacts!`)
-          : dispatch(addContact(values));
-        values = { name: '', number: '' };
+        dispatch(login(values));
         resetForm();
         setSubmitting(false);
       }}
@@ -41,7 +32,7 @@ export const ContactForm = () => {
             fontWeight="semibold"
             color="purple.800"
           >
-            Contacts
+            Login
           </Heading>
         </Box>
         <Box my={4} textAlign="left">
@@ -52,19 +43,17 @@ export const ContactForm = () => {
               fontWeight="semibold"
               color="purple.800"
             >
-              Name:
+              Email:
               <Input
                 as={Field}
                 focusBorderColor="purple.400"
                 errorBorderColor="crimson"
                 bg="blackAlpha.100"
-                type="text"
-                name="name"
-                pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-                title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+                type="email"
+                name="email"
               />
             </FormLabel>
-            <ErrorMessage name="name" />
+            <ErrorMessage name="email" />
             <FormLabel
               mt={6}
               fontFamily="cursive"
@@ -72,27 +61,26 @@ export const ContactForm = () => {
               fontWeight="semibold"
               color="purple.800"
             >
-              Number:
+              Password:
               <Input
                 as={Field}
                 focusBorderColor="purple.400"
                 errorBorderColor="crimson"
                 bg="blackAlpha.100"
-                type="tel"
-                name="number"
-                pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-                title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+                type="password"
+                name="password"
               />
             </FormLabel>
-            <ErrorMessage name="number" />
+            <ErrorMessage name="pasword" />
             <Button
               type="submit"
+              leftIcon={<TbLogin />}
               colorScheme="purple"
               variant="solid"
               width="full"
               mt={4}
             >
-              Add Contact
+              Sign In
             </Button>
           </FormControl>
         </Box>
