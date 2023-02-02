@@ -2,16 +2,18 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import { Layout } from './Layout/Layout';
-import { HomePage } from 'pages/HomePage/HomePage';
-import { ContactsPage } from 'pages/ContactsPage/ContactsPage';
-import { RegisterPage } from 'pages/PegisterPage/RegisterPage';
-import { LoginPage } from 'pages/LoginPage/LoginPage';
 import { GlobalStyle } from 'utils/GlobalStyles';
 import { fetchCurrentUser } from 'redux/auht/auth-operations';
 import { PrivateRoute } from 'HOCs/PrivateRoute';
 import { PublicRoute } from 'HOCs/PublicRoute';
 import { selectIsFetchingCurentUser } from 'redux/auht/auth-selector';
 import { ChakraProvider } from '@chakra-ui/react';
+import { lazy } from 'react';
+
+const HomePage = lazy(()=>import('pages/HomePage/HomePage' /* webpackChunkName: "home-page" */));
+const ContactsPage = lazy(()=>import('pages/ContactsPage/ContactsPage' /* webpackChunkName: "contacts-page" */));
+const LoginPage = lazy(()=>import('pages/LoginPage/LoginPage' /* webpackChunkName: "login-page" */));
+const RegisterPage = lazy(()=>import('pages/RegisterPage/RegisterPage' /* webpackChunkName: "register-page" */));
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -29,7 +31,7 @@ export const App = () => {
               <Route
                 index
                 element={
-                  <PublicRoute>
+                  <PublicRoute restricted>
                     <HomePage />
                   </PublicRoute>
                 }

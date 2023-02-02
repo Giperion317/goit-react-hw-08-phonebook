@@ -5,7 +5,8 @@ import { Navigation } from 'components/Navigation/Navigation';
 import { Logo } from 'components/Logo/Logo';
 import { AuthNavigation } from 'components/AuthNavigation/AuthNavigation';
 import { UserAuthMenu } from 'components/UserAuthMenu/UserAuthMenu';
-import { Box, Flex, Container, Link } from '@chakra-ui/react';
+import { Suspense } from 'react';
+import { Box, Flex, Container, Link, Spinner } from '@chakra-ui/react';
 
 export const Layout = () => {
   const token = useSelector(selectToken);
@@ -39,7 +40,9 @@ export const Layout = () => {
             m="0 auto"
             textAlign="center"
           >
-            <Outlet />
+            <Suspense fallback={<Spinner color="purple.800" size="xl" />}>
+              <Outlet />
+            </Suspense>
           </Container>
         </Box>
       </Box>
@@ -50,8 +53,8 @@ export const Layout = () => {
         fontFamily="cursive"
         fontSize="md"
         fontWeight="semibold"
-              color="purple.800"
-              mt='auto'
+        color="purple.800"
+        mt="auto"
       >
         <Container
           maxW={['300px', '440px', '750px', '970px', '1200px']}
