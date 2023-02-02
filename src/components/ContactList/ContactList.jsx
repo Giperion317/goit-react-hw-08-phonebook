@@ -6,7 +6,7 @@ import { selectContacts } from 'redux/contacts/contacts-selector';
 import { selectFilter } from 'redux/filter/filter-selector';
 import { selectError } from 'redux/contacts/contacts-selector';
 import { ContactItem } from './ContactItem';
-import { List, SimpleGrid} from '@chakra-ui/react';
+import { List, SimpleGrid, Heading} from '@chakra-ui/react';
 
 
 export const ContactList = () => {
@@ -38,7 +38,7 @@ export const ContactList = () => {
 
   return (
 <>
-    {!error && (
+    {!error ? (
       <List tm='10'>
       <SimpleGrid
           p="10px"
@@ -48,13 +48,14 @@ export const ContactList = () => {
           columns={[1, 1, 2, 2, 3]}
           justifyContent="center"
       >
-        {contacts.length > 0 &&
-          visibleContacts.map(contact =>
+        {visibleContacts.map(contact =>
             ContactItem(contact, showUpdateForm, userToUpdate, clousForm)
           )}
         </SimpleGrid>
     </List>
-    )}
+    ):(
+        <Heading color="#ffffff">{error.message}</Heading>
+      )}
     </>
   );
 };
