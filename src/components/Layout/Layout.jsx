@@ -5,7 +5,7 @@ import { Navigation } from 'components/Navigation/Navigation';
 import { Logo } from 'components/Logo/Logo';
 import { AuthNavigation } from 'components/AuthNavigation/AuthNavigation';
 import { UserAuthMenu } from 'components/UserAuthMenu/UserAuthMenu';
-import { Suspense } from 'react';
+import { Suspense } from "react";
 import { Box, Flex, Container, Link, Spinner } from '@chakra-ui/react';
 
 export const Layout = () => {

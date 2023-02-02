@@ -1,7 +1,7 @@
 import { LoginForm } from 'components/LoginForm/LoginForm';
 import { Box, Flex } from '@chakra-ui/react';
 
-export const LoginPage = () => {
+const LoginPage = () => {
   return (
     <Flex width="full" align="center" justifyContent="center">
       <Box
@@ -17,3 +17,5 @@ export const LoginPage = () => {
     </Flex>
   );
 };
+
+export default LoginPage;

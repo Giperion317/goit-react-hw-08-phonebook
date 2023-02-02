@@ -3,7 +3,7 @@ import { Text, Button } from '@chakra-ui/react';
 import { GiArchiveRegister } from 'react-icons/gi';
 import { TbLogin } from 'react-icons/tb';
 
-export const HomePage = () => {
+const HomePage = () => {
   const navigate = useNavigate();
   return (
     <>
@@ -59,3 +59,5 @@ export const HomePage = () => {
     </>
   );
 };
+
+export default HomePage;

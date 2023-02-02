@@ -17,3 +17,5 @@ export const RegisterPage = () => {
     </Flex>
   );
 }
+
+export default RegisterPage;

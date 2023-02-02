@@ -10,10 +10,11 @@ import { selectIsFetchingCurentUser } from 'redux/auht/auth-selector';
 import { ChakraProvider } from '@chakra-ui/react';
 import { lazy } from 'react';
 
-const HomePage = lazy(()=>import('pages/HomePage/HomePage' /* webpackChunkName: "home-page" */));
-const ContactsPage = lazy(()=>import('pages/ContactsPage/ContactsPage' /* webpackChunkName: "contacts-page" */));
-const LoginPage = lazy(()=>import('pages/LoginPage/LoginPage' /* webpackChunkName: "login-page" */));
-const RegisterPage = lazy(()=>import('pages/RegisterPage/RegisterPage' /* webpackChunkName: "register-page" */));
+const HomePage = lazy(() => import('pages/HomePage/HomePage' /* webpackChunkName: "home-page" */));
+const ContactsPage = lazy(() => import('pages/ContactsPage/ContactsPage' /* webpackChunkName: "contacts-page" */));
+const LoginPage = lazy(() => import('pages/LoginPage/LoginPage' /* webpackChunkName: "login-page" */));
+const RegisterPage = lazy(() => import('pages/RegisterPage/RegisterPage' /* webpackChunkName: "register-page" */));
+
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -31,7 +32,7 @@ export const App = () => {
               <Route
                 index
                 element={
-                  <PublicRoute restricted>
+                  <PublicRoute>
                     <HomePage />
                   </PublicRoute>
                 }

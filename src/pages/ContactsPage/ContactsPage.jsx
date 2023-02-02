@@ -5,7 +5,7 @@ import { Filter } from 'components/Filter/Filter';
 import { ContactList } from 'components/ContactList/ContactList'; 
 import { Box, Flex, Spinner } from '@chakra-ui/react';
 
-export const ContactsPage = () => {
+const ContactsPage = () => {
   const isLoading = useSelector(selectIsLoading);
   
   return (
@@ -27,3 +27,5 @@ export const ContactsPage = () => {
         </Flex>
   );
 };
+
+export default ContactsPage;
