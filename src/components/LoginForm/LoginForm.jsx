@@ -9,17 +9,35 @@ import {
   Input,
   Button,
   Box,
+  useToast,
 } from '@chakra-ui/react';
 import { TbLogin } from 'react-icons/tb';
 
 export const LoginForm = () => {
   const dispatch = useDispatch();
+  const toast = useToast();
   return (
     <Formik
       initialValues={{ email: '', password: '' }}
       validationSchema={ValidateLoginForm}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        dispatch(login(values));
+        dispatch(login(values)).then(({ error }) => {
+          if (error) {
+            toast({
+              position: 'top',
+              title: 'Incorrect email or password, please try again!',
+              status: 'error',
+              isClosable: true,
+            });
+            return;
+          }
+          toast({
+            position: 'top',
+            title: `Congratulations, you are logged in!`,
+            status: 'success',
+            isClosable: true,
+          });
+        });
         resetForm();
         setSubmitting(false);
       }}

@@ -1,21 +1,22 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from 'redux/auht/auth-operations';
-import { selectEmail } from 'redux/auht/auth-selector';
-import { Flex, Text, IconButton } from '@chakra-ui/react';
+import { selectName } from 'redux/auht/auth-selector';
+import { Avatar, Flex, Text, IconButton } from '@chakra-ui/react';
 import { TbLogout } from 'react-icons/tb';
 
 export const UserAuthMenu = () => {
   const dispatch = useDispatch();
-  const email = useSelector(selectEmail);
+  const name = useSelector(selectName);
   return (
     <Flex gap="2" alignItems="center">
+      <Avatar name={name} size='sm'/>
       <Text
         fontFamily="cursive"
         fontSize="xl"
         fontWeight="semibold"
         color="purple.800"
       >
-        Welcome,{email}
+        {name}
       </Text>
       <IconButton
         aria-label="logout"

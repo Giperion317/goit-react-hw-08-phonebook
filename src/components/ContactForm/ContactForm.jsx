@@ -2,21 +2,21 @@ import { useSelector } from 'react-redux';
 import { selectContacts } from 'redux/contacts/contacts-selector';
 import { useDispatch } from 'react-redux';
 import { addContact } from 'redux/contacts/contacts-operation';
-import { toast } from 'react-toastify';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { ValidateContactForm } from '../../utils/ValidateForm';
 import {
-  Heading,
   FormControl,
   FormLabel,
   Input,
   Button,
   Box,
+  useToast,
 } from '@chakra-ui/react';
 
 export const ContactForm = () => {
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
+  const toast = useToast()
   return (
     <Formik
       initialValues={{ name: '', number: '' }}
@@ -26,7 +26,12 @@ export const ContactForm = () => {
           return name.toLowerCase() === values.name.toLowerCase();
         });
         nameMatch
-          ? toast.warn(`${values.name} is alredy in contacts!`)
+          ? toast({
+              position: 'top',
+              title: `${values.name} is already in contacts!`,
+              status: 'warning',
+              isClosable: true,
+            })
           : dispatch(addContact(values));
         values = { name: '', number: '' };
         resetForm();
@@ -34,16 +39,6 @@ export const ContactForm = () => {
       }}
     >
       <Box p={2}>
-        <Box textAlign="center">
-          <Heading
-            fontFamily="cursive"
-            fontSize="2xl"
-            fontWeight="semibold"
-            color="purple.800"
-          >
-            Contacts
-          </Heading>
-        </Box>
         <Box my={4} textAlign="left">
           <FormControl as={Form}>
             <FormLabel

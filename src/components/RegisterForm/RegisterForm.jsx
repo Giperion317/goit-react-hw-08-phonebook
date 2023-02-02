@@ -9,17 +9,35 @@ import {
   Input,
   Button,
   Box,
+  useToast
 } from '@chakra-ui/react';
 import { GiArchiveRegister } from 'react-icons/gi';
 
 export const RegisterForm = () => {
   const dispatch = useDispatch();
+  const toast = useToast();
   return (
     <Formik
       initialValues={{ name: '', email: '', password: '' }}
       validationSchema={ValidateRegisterForm}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        dispatch(register(values));
+        dispatch(register(values)).then(({ error }) => {
+          if (error) {
+            toast({
+              position: 'top',
+              title: 'Sorry user with this email exists!',
+              status: 'error',
+              isClosable: true,
+            });
+            return;
+          }
+          toast({
+            position: 'top',
+            title: `Congratulations, you have successfully registered!`,
+            status: 'success',
+            isClosable: true,
+          });
+        });
         resetForm();
         setSubmitting(false);
       }}
