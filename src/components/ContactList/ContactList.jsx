@@ -1,16 +1,27 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { fetchContacts } from 'redux/contacts/contacts-operation';
 import { selectContacts } from 'redux/contacts/contacts-selector';
 import { selectFilter } from 'redux/filter/filter-selector';
+import { selectError } from 'redux/contacts/contacts-selector';
 import { ContactItem } from './ContactItem';
 import { List, SimpleGrid} from '@chakra-ui/react';
 
 
 export const ContactList = () => {
   const [userToUpdate, setUserToUpdate] = useState(null);
+  const dispatch = useDispatch();
   const contacts = useSelector(selectContacts);
   const filter = useSelector(selectFilter);
+  const error = useSelector(selectError)
   const visibleContacts = getVisibleContatcts();
+
+ useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
+
+
   function getVisibleContatcts() {
     const normalizedFilter = filter.toLocaleLowerCase();
     return contacts.filter(contact =>
@@ -26,7 +37,9 @@ export const ContactList = () => {
   };
 
   return (
-    <List tm='10'>
+<>
+    {!error && (
+      <List tm='10'>
       <SimpleGrid
           p="10px"
           w="100%"
@@ -41,6 +54,7 @@ export const ContactList = () => {
           )}
         </SimpleGrid>
     </List>
-    
+    )}
+    </>
   );
 };
